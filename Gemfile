@@ -65,7 +65,7 @@ gem 'carrierwave'
 gem 'grim'
 gem 'rmagick'
 #poppler
-gem 'poppler', '~> 3.0', '>= 3.0.7'
+#gem 'poppler', '~> 3.0', '>= 3.0.7'
 #paperclip
 gem "paperclip", "~> 4.3"
 #rotating
