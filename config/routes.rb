@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   resources :posts do
     resources :images do
       resources :comments, module: :images, :only => [:create, :destroy]
-      #resources :likes, module: :images, :only => [:create, :destroy]
       member do
         post 'make_like'
         delete 'make_unlike'
@@ -27,7 +26,6 @@ Rails.application.routes.draw do
       delete 'make_unlike'
     end
     resources :comments, module: :posts, :only => [:create, :destroy]
-    #resources :likes, module: :posts, :only => [:create, :destroy]
   end
   
   # The priority is based upon order of creation: first created -> highest priority.
