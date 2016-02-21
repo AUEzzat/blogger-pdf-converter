@@ -1,4 +1,4 @@
-class Images::LikeController < LikesController
+class Images::LikeController < LikeController
   before_action :set_host
 
   private
