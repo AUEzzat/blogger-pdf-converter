@@ -62,7 +62,7 @@
 
           <%= form_for [post , post.comments.build] do |f| %>
           <p> <%= f.text_area :text, :size => '40x10', class: "form-control", style: "width:100%;", placeholder: "Write a comment..." %> </p>
-          <p> <%= f.submit "post comment", class: "btn btn-primary", style: "width:100%;"%> </p>
+          <p> <%= f.submit "post comment", class: "btn btn-primary", style: "width:100%;", data: {disable_with:"post comment"}%> </p>
           <% end %>
           </tr>
         </br></br>
