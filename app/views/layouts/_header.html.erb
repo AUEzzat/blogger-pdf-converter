@@ -1,0 +1,21 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+
+    <%= link_to raw("<span class='glyphicon glyphicon-home'></span> PDF Converter"), root_path, id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-right" style="position: static;">
+        <% if logged_in? %>
+          <li>
+          <span><%= link_to (raw("<span class='glyphicon glyphicon-user'></span> Logged in as ")+current_user.name), user_path(current_user), class: "label label-success" %></span>
+          <% if current_user.admin %>
+          <span><%= link_to (raw("<span class= 'glyphicon glyphicon-wrench'></span><span class= 'glyphicon glyphicon-user'></span> Edit users")), users_path, class: "label label-info" %></span>
+          <% end %>
+          <span><%= link_to (raw("<span class= 'glyphicon glyphicon-log-out'></span> Log out")), logout_path, class: "label label-primary", method: "delete" %></span>
+          </li>
+        <% else %>
+          <li><span><%= link_to (raw("<span class= 'glyphicon glyphicon-log-in'></span> Log in")), login_path, class: "label label-primary" %></span></li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+</header>

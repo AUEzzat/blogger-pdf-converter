@@ -1,0 +1,40 @@
+<% if !flash[:notice].blank? %>
+<p id="notice"><div class="alert alert-success"><%= notice %></div></p>
+<% end %>
+<ul class="nav nav-tabs">
+<li class="active"><%= link_to 'Show All', @post %></li>
+<% @post.images.all.each do |image| %>
+<li><%= link_to 'page '+image.number.to_s, "/posts/"+@post.title+"/images/"+image.number.to_s %></li>
+<% end %>
+</ul>
+<p>
+	<% images_path=index_images %>
+	<% images_path=images_path.paginate(:page => params[:page]) %>
+	<% i=1 %>
+	<% images_path.each do |thumbnail| %>
+	<div class="size2">
+	<%= link_to image_tag(thumbnail), "/posts/"+@post.slug+"/images/"+i.to_s %>
+	<% i=i+1 %>
+	</div>
+	<% end %>  
+
+</p>
+
+<h1><strong><%= @post.title %></strong></h1>
+
+<p>
+  <%= @post.text %>
+</p>
+<%= pluralize(@post.likes.count, "like") %>
+<% if @post.likes.where(user_id: current_user.id)==[]%>
+<tr><%= link_to raw("<span class='glyphicon glyphicon-thumbs-up'></span> Like"), make_like_post_path(@post), method: :post, data: {disable_with: raw("<span class='glyphicon glyphicon-thumbs-down'></span> Unlike")} %>
+<% else %>
+<tr> <%= link_to raw("<span class='glyphicon glyphicon-thumbs-down'></span> Unlike"), make_unlike_post_path(@post), method: :delete, data: {disable_with: raw("<span class='glyphicon glyphicon-thumbs-up'></span> Like")} %>
+<% end %><br><br>
+<%= link_to 'Back', posts_path, class:"btn btn-default" %>
+
+<%= will_paginate images_path %>
+
+
+
+

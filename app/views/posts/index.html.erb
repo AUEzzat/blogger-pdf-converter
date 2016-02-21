@@ -1,0 +1,75 @@
+<br>
+<% if !flash[:notice].blank? %>
+  <div class="alert alert-info">
+  <%= flash[:notice] %>
+  </div>
+<% end %>
+<br />
+
+<div><%= link_to "New Document", new_post_path, class: "btn btn-primary" %></div>
+
+<% if(@posts.count==0) %>
+<div class="glyphicon glyphicon-send"><p>no posts uploaded yet start now<p>
+</div>
+<% end %>
+
+<br />
+<br />
+<center><table class="table" align="center">
+
+  <tbody>
+
+    <% @posts.each do |post| %>
+      
+        <tr>
+        <%if post.slide.file != nil and post.slide.file.extension=="pdf"%>
+        <div class="size"><%=image_tag "/uploads/post/slide/#{post.id}/#{post.slide_identifier}"+"01.jpg" %> <%end%>
+          <h1 style="text-align:center;"><%= post.title %></h1>
+        <div>
+            <%= pluralize(post.likes.count, "like") %>
+             <% if post.likes.where(user_id: current_user.id)==[]%>
+             <%= link_to raw("<span class='glyphicon glyphicon-thumbs-up'></span> Like"), make_like_post_path(post), method: :post, data: {disable_with: raw("<span class='glyphicon glyphicon-thumbs-down'></span> Unlike")} %>
+             <% else %>
+             <%= link_to raw("<span class='glyphicon glyphicon-thumbs-down'></span> Unlike"), make_unlike_post_path(post), method: :delete, data: {disable_with: raw("<span class='glyphicon glyphicon-thumbs-up'></span> Like")} %>
+             <% end %>
+           </div>
+        <div><%= link_to raw("<span class='glyphicon glyphicon-download-alt'></span> Download Document"), post.slide_url %></div>
+        
+        
+        <% if post.user_id == current_user.id or current_user.admin %>
+        <tr><%= link_to "Show", post, class: "btn btn-info", style: "width:50%;" %></tr>
+        <tr><%= link_to "Delete",  post, method: :delete, class: "btn btn-danger", style: "width:50%;", confirm: "Are you sure that you wish to delete #{post.title}?" %></tr>
+        <% else %>
+        <%= link_to "Show", post, class: "btn btn-info", style: "width:100%;" %>
+        <% end %>
+        </br></br>
+      <% post.comments.each do |comment| %><div class="comment">
+        <% commenter=User.find_by_id(comment.user_id) %>
+        <% if commenter.admin %>
+          <%= image_tag("/assets/icon-admin.png", size: "50") %>
+        <% else %>
+          <%= image_tag("/assets/icon-user.png", size: "50") %>
+        <% end %>
+        <p class="badge"><%= commenter.name %></p>
+        <p class="well"><%= comment.text %></p>
+        <p><%= time_ago_in_words comment.created_at %> ago </p>
+        <% if commenter == current_user or current_user.admin %>
+        <p><%= link_to "delete", [post,comment], method: :delete, data: { confirm: "You sure?" } %></P>
+        <% end %>
+        </div><% end %>
+
+
+          <%= form_for [post , post.comments.build] do |f| %>
+          <p> <%= f.text_area :text, :size => '40x10', class: "form-control", style: "width:100%;", placeholder: "Write a comment..." %> </p>
+          <p> <%= f.submit "post comment", class: "btn btn-primary", style: "width:100%;"%> </p>
+          <% end %>
+          </tr>
+        </br></br>
+        <div class="line">.</div>
+      </br></br>
+    <% end %>
+
+    </tbody>
+</table></center>
+
+<% will_paginate @posts %>

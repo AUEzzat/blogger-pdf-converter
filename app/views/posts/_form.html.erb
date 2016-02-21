@@ -1,0 +1,29 @@
+<%= form_for @post, html: {multipart: true} do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+      <% if message.include? "Slide" then message=message[5..message.size] end %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title, class: 'form-control', placeholder: "Enter post title" %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :text, class: 'form-control', placeholder: "Write a description..." %>
+  </div>
+  <div class="field">
+    <%= f.label :pdf %><br>
+    <%= f.file_field :slide, class: "panel panel-default" %>
+  </div>
+  <div class="actions">
+    <%= f.button raw("Upload"), class: "btn btn-success", data: {disable_with: "<i class='glyphicon glyphicon-repeat fa-spin'></i> Uploading.."} %>
+  </div>
+<% end %>
