@@ -52,5 +52,5 @@
 
 <div class="container2"><%= form_for [@post, @image, @image.comments.build] do |f| %>
 <p> <%= f.text_area :text, class: "form-control", style: "height:100px;width:97%;float:right;", placeholder: "Write a comment..." %> </p>
-<p> <%= f.submit "post comment", class: "btn btn-primary", style: "width:97%;float:right;"%> </p>
+<p> <%= f.submit "post comment", class: "btn btn-primary", style: "width:97%;float:right;", data: {disable_with:"post comment"}%> </p>
 <% end %></div></div></div>
