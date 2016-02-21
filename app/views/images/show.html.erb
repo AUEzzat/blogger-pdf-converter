@@ -4,7 +4,7 @@
 <% @post.images.all.each do |image| %>
   <% if image == @image %><li class="active">
   <% else %><li><% end %>
-  <%= link_to 'page '+image.number.to_s, "/posts/"+@post.title+"/images/"+image.number.to_s %></li>
+  <%= link_to 'page '+image.number.to_s, "/posts/"+@post.title.parameterize+"/images/"+image.number.to_s %></li>
 <% end %>
 </ul>
   

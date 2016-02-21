@@ -4,7 +4,7 @@
 <ul class="nav nav-tabs">
 <li class="active"><%= link_to 'Show All', @post %></li>
 <% @post.images.all.each do |image| %>
-<li><%= link_to 'page '+image.number.to_s, "/posts/"+@post.title+"/images/"+image.number.to_s %></li>
+<li><%= link_to 'page '+image.number.to_s, "/posts/"+@post.title.parameterize+"/images/"+image.number.to_s %></li>
 <% end %>
 </ul>
 <p>
